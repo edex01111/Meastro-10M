@@ -1,5 +1,5 @@
 // ============================================
-// MAESTRO TRADING BOT — COMPLETE UPDATED VERSION
+// Fomo TRADING BOT — COMPLETE UPDATED VERSION
 // Jupiter V6 + Multi-Wallet + 2.5% SOL Commission (normal address)
 // Sniper TP/SL + Trade History + PNL + Referrals + Admin Broadcast
 // ============================================
