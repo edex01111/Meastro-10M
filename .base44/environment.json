@@ -1,0 +1,12 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "BOT_TOKEN",
+      "description": "Telegram Bot API token from @BotFather (format: 123456789:AA...). Used by bot.js/snipe.js via process.env.BOT_TOKEN.",
+      "requiredAtBoot": true
+    }
+  ]
+}

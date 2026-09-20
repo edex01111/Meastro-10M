@@ -1,0 +1,14 @@
+services:
+  bot:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env.base44-defaults
+      - /run/base44/app.env
+    command: sh -c "npm install --no-audit --no-fund && node snipe.js"
+    restart: unless-stopped
+    stop_grace_period: 10s
