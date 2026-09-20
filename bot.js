@@ -2215,8 +2215,26 @@ async function startBot() {
   console.log(`RPC: ${SOLANA_RPC}`);
   console.log(`Jupiter API: ${JUPITER_API}`);
   if (redis) console.log('Storage: Redis + memory'); else console.log('Storage: memory only');
-  await bot.launch({ allowedUpdates: ['message','callback_query'] });
-  console.log('Bot running.');
+
+  const MAX_RETRIES = 10;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      await bot.launch({ allowedUpdates: ['message','callback_query'] });
+      console.log('Bot running.');
+      return;
+    } catch (err) {
+      console.error(`Launch attempt ${attempt}/${MAX_RETRIES} failed:`, err.message);
+      if (err.message && err.message.includes('409')) {
+        console.error('⚠️  Another bot instance is running with this token. Stop it (e.g. on Railway) for this one to connect.');
+      }
+      if (attempt < MAX_RETRIES) {
+        console.log('Retrying in 10 seconds...');
+        await new Promise(r => setTimeout(r, 10000));
+      }
+    }
+  }
+  console.error('All launch attempts failed. Exiting.');
+  process.exit(1);
 }
 
 startBot().catch(err => { console.error('Fatal startup error:', err); process.exit(1); });
