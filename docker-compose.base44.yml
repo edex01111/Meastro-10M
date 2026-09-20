@@ -1,0 +1,34 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--requirepass", "base44devredis"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "base44devredis", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    image: node:18-bookworm-slim
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - REDIS_URL=redis://default:base44devredis@redis:6379
+      - SOLANA_RPC=${SOLANA_RPC:-https://api.mainnet-beta.solana.com}
+      - ADMIN_CHAT_IDS=${ADMIN_CHAT_IDS:-8904494848}
+      - COMMISSION_WALLET=${COMMISSION_WALLET:-EGYMD5BCc3MAGGFrwh1pNBuWrt95S7YfSMze7PJC6qbK}
+      - COMMISSION_PERCENTAGE=${COMMISSION_PERCENTAGE:-7%}
+      - JUPITER_API=${JUPITER_API:-https://lite-api.jup.ag/swap/v1}
+    env_file:
+      - ./.env.base44-defaults
+      - /run/base44/app.env
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: sh -c "npm install --omit=dev && node snipe.js"
+    restart: unless-stopped
