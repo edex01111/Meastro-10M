@@ -1138,7 +1138,7 @@ async function showMainMenu(ctx, edit = false) {
       feeNote = '\n💎 *Trade with low fees* — Use referral link';
     }
     
-    const message = `👋 *Maestro Trading Bot*\n\n*Your AI Trading Assistant on Solana* ⚡\n━━━━━━━━━━━━━━━━━━━━━━━\n🚨 Real-time pump detection\n💳 Instant wallet alerts\n🎯 Auto TP/SL management\n🤖 Smart trade execution${feeNote}\n━━━━━━━━━━━━━━━━━━━━━━━\n📊 Today PNL: ${pnlEmoji} ${pnlSign}$${Math.abs(todayPnl).toFixed(2)}\n\n${walletInfo}\n\nPaste a Solana contract address to analyze`;
+    const message = `👋 *Fomo Trading Bot*\n\n*Your AI Trading Assistant on Solana* ⚡\n━━━━━━━━━━━━━━━━━━━━━━━\n🚨 Real-time pump detection\n💳 Instant wallet alerts\n🎯 Auto TP/SL management\n🤖 Smart trade execution${feeNote}\n━━━━━━━━━━━━━━━━━━━━━━━\n📊 Today PNL: ${pnlEmoji} ${pnlSign}$${Math.abs(todayPnl).toFixed(2)}\n\n${walletInfo}\n\nPaste a Solana contract address to analyze`;
     const keyboard = Markup.inlineKeyboard([
       [Markup.button.callback('💼 Wallet', 'menu_wallet')],
       [Markup.button.callback('📊 Positions', 'menu_positions'), Markup.button.callback('🚀 Buy', 'menu_buy')],
